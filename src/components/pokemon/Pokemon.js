@@ -11,7 +11,7 @@ function Pokemon(props) {
         electric: "#E2E32B",
         fairy: "#FD005F",
         fighting: "#994025",
-        fire: "#45677E",
+        fire: "#FD4B5A",
         flying: "#748696",
         ghost: "#584A7C",
         grass: "#147B3D",
