@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 function PokemonList() {
 
     const [pokemon, setPokemon] = useState([])
-
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=807")

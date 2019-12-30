@@ -27,10 +27,8 @@ function Pokemon(props) {
     const { id } = props.match.params
     const [name, setName] = useState("")
     const [imgUrl, setImgUrl] = useState("")
-    const [types, setTypes] = useState({
-        type1: '',
-        type2: '' || "Empty",
-    })
+    const [types1, setTypes1] = useState("")
+    const [types2, setTypes2] = useState("")
     const [description, setDescription] = useState("")
     const [gender, setGender] = useState("")
     const [stats, setStats] = useState({
@@ -47,12 +45,7 @@ function Pokemon(props) {
     const [abilities, setAbilities] = useState({ ability1: "", ability2: "" })
     const [baseHappiness, setBaseHappiness] = useState("")
 
-    // Const ev = pokemonRes.data.stats.filter(stat => 
-    // { if (stat.effort > 0
-    //     return true :
-    //     )}
-    //     return false)
-    // ici , le true va filter tout ce qui est au dessus de 0 , et ca le "return" ; sinon non 
+
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
@@ -82,7 +75,8 @@ function Pokemon(props) {
             })
             setHeight(PokemonRes.data.height)
             setWeight(PokemonRes.data.weight)
-            setTypes({ type1: PokemonRes.data.types[0].type.name })
+            setTypes1(PokemonRes.data.types[0].type.name)
+            setTypes2(PokemonRes.data.types[1].type.name)
             setAbilities({ ability1: PokemonRes.data.abilities[0].ability.name })
             setDescription(descriptionEn.flavor_text)
             setCaptureRate(PokeRes.data.capture_rate)
@@ -90,6 +84,7 @@ function Pokemon(props) {
             setGender(PokeRes.data.has_gender_differences)
         }
         fetchData()
+            .catch(error => { setTypes2(null) })
     }, [])
     return (
         <div className="col">
@@ -103,8 +98,13 @@ function Pokemon(props) {
                             <div className="float-right">
                                 <span
                                     className="badge badge-primary badge-pill mr-1"
-                                    style={{ backgroundColor: `${TYPE_COLORS[types.type1]}` }}>
-                                    {types.type1}
+                                    style={{ backgroundColor: `${TYPE_COLORS[types2]}` }}>
+                                    {types2}
+                                </span>
+                                <span
+                                    className="badge badge-primary badge-pill mr-1"
+                                    style={{ backgroundColor: `${TYPE_COLORS[types1]}` }}>
+                                    {types1}
                                 </span>
                             </div>
                         </div>
@@ -182,9 +182,7 @@ function Pokemon(props) {
                                         <div className="progress-bar"
                                             role="progressBar"
                                             style={{ width: `${stats.speed}%` }}
-                                            aria-valuenow="25"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100">
+                                        >
                                             <small>{stats.speed}</small> </div>
                                     </div>
                                 </div>
@@ -231,7 +229,7 @@ function Pokemon(props) {
                         </div>
                     </div>
                     <div className="card-footer text-muted">
-                        Data from <a href="https://pokeapi.co/" target="_blank" className="card-link">PokeApi.co</a>
+                        Data from <a href="https://pokeapi.co/" rel="noopener noreferrer" target="_blank" className="card-link">PokeApi.co</a>
                     </div>
                 </div>
             </div>
